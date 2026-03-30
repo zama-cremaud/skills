@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FHESkills — Encrypted Smart Contract Knowledge for AI Agents</title>
+  <meta name="description" content="The missing knowledge between AI agents and production encrypted smart contracts. FHE on Ethereum.">
+  <meta property="og:title" content="FHESkills">
+  <meta property="og:description" content="The missing knowledge between AI agents and production encrypted smart contracts.">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, monospace;
+      background: #0a0a0a;
+      color: #e0e0e0;
+      padding: 2rem;
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    h1 { color: #fff; margin-bottom: 0.5rem; font-size: 2rem; }
+    .subtitle { color: #888; margin-bottom: 2rem; font-size: 1.1rem; }
+    h2 { color: #fff; margin: 2rem 0 1rem; font-size: 1.3rem; }
+    a { color: #7c9eff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .skill {
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 1rem;
+      margin-bottom: 0.75rem;
+      background: #111;
+    }
+    .skill-name { font-weight: bold; color: #fff; }
+    .skill-desc { color: #999; font-size: 0.9rem; margin-top: 0.25rem; }
+    code {
+      background: #1a1a2e;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-size: 0.9rem;
+      color: #7c9eff;
+    }
+    .usage {
+      background: #111;
+      border: 1px solid #222;
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+    .usage code { display: block; margin: 0.5rem 0; }
+  </style>
+</head>
+<body>
+  <h1>FHESkills</h1>
+  <p class="subtitle">The missing knowledge between AI agents and production encrypted smart contracts.</p>
+
+  <div class="usage">
+    <p><strong>For AI agents:</strong> Fetch skills directly.</p>
+    <code>https://fheskills.com/ship/SKILL.md</code>
+    <code>https://fheskills.com/fhevm/SKILL.md</code>
+    <code>https://fheskills.com/acl/SKILL.md</code>
+    <p style="margin-top: 1rem;"><strong>For Claude Code:</strong></p>
+    <code>claude plugin install fheskills</code>
+  </div>
+
+  <h2>Skills</h2>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/ship/SKILL.md">ship</a> — Start here</div>
+    <div class="skill-desc">End-to-end guide from idea to deployed encrypted dApp. Routes you through all other skills.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/concepts/SKILL.md">concepts</a></div>
+    <div class="skill-desc">Mental models for FHE — nothing is plaintext, you cannot branch on secrets.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/fhevm/SKILL.md">fhevm</a></div>
+    <div class="skill-desc">Core library — encrypted types, FHE operations, type casting, random numbers.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/acl/SKILL.md">acl</a></div>
+    <div class="skill-desc">Access Control Lists for encrypted values. Where most bugs live.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/patterns/SKILL.md">patterns</a></div>
+    <div class="skill-desc">Confidential ERC-20, encrypted voting, sealed-bid auctions.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/testing/SKILL.md">testing</a></div>
+    <div class="skill-desc">Testing encrypted contracts with Hardhat and the fhEVM plugin.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/security/SKILL.md">security</a></div>
+    <div class="skill-desc">FHE-specific vulnerabilities — ACL misconfig, information leaks, timing attacks.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/addresses/SKILL.md">addresses</a></div>
+    <div class="skill-desc">Verified fhEVM contract addresses for mainnet and Sepolia.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/tools/SKILL.md">tools</a></div>
+    <div class="skill-desc">fhEVM development toolchain — Hardhat plugin, Solidity library.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/frontend/SKILL.md">frontend</a></div>
+    <div class="skill-desc">Handling encrypted state in your dApp UI.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/deployment/SKILL.md">deployment</a></div>
+    <div class="skill-desc">Deploying encrypted contracts to fhEVM-compatible chains.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/migration/SKILL.md">migration</a></div>
+    <div class="skill-desc">Converting existing Solidity contracts to use FHE.</div>
+  </div>
+
+  <h2 style="margin-top: 3rem;">About</h2>
+  <p style="color: #888;">
+    Built by <a href="https://zama.ai">Zama</a>.
+    FHE on Ethereum — compute on encrypted data without ever decrypting.
+  </p>
+</body>
+</html>
