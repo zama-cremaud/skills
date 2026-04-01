@@ -201,33 +201,59 @@ FHE-specific errors to handle:
 
 ## Starting a New Project
 
-### Smart Contracts Only
+**Before cloning anything, ask the user what they need:**
+
+> "What kind of project are you building?"
+> 1. **Smart contracts only** — just Solidity, tests, and deployment
+> 2. **Full-stack dApp** — smart contracts + React frontend
+> 3. **Custom setup** — smart contracts + their own frontend framework or backend
+> 4. **Browser extension** — needs a backend proxy for encryption/decryption
+
+**Do not assume.** The user may already have a frontend they want to integrate with, or they may want a full-stack setup from the start. Ask first.
+
+### Option 1: Smart Contracts Only
 
 ```bash
-git clone https://github.com/zama-ai/fhevm-hardhat-template
-cd fhevm-hardhat-template
+git clone https://github.com/zama-ai/fhevm-hardhat-template <project-name>
+cd <project-name>
 npm install
 ```
 
-### Smart Contracts + React Frontend
+Best for: writing and testing encrypted contracts, deploying to Sepolia/mainnet, no UI needed.
+
+### Option 2: Full-Stack dApp (Smart Contracts + React Frontend)
 
 ```bash
-git clone https://github.com/zama-ai/fhevm-react-template
-cd fhevm-react-template
+git clone https://github.com/zama-ai/fhevm-react-template <project-name>
+cd <project-name>
 npm install
 ```
 
-### Custom Frontend / Node.js Backend
+Best for: building a complete confidential dApp with a React UI that handles encryption, decryption, and wallet interaction out of the box.
 
-Start with the Hardhat template for contracts, then add the relayer-sdk:
+### Option 3: Custom Frontend / Node.js Backend
+
+Start with the Hardhat template for contracts, then add the SDK to your chosen frontend/backend:
 
 ```bash
+# In your contract project
+git clone https://github.com/zama-ai/fhevm-hardhat-template <project-name>
+
+# In your frontend/backend project
 npm install @fhevm/sdk  # Check https://github.com/zama-ai/relayer-sdk for latest
 ```
 
-### Browser Extensions
+Best for: teams that already have a frontend (Next.js, Vue, Svelte, etc.) or need a Node.js backend.
 
-The current relayer-sdk has issues with non-browser environments. **Create a backend** that proxies encryption/decryption requests instead of running the SDK directly in the extension.
+### Option 4: Browser Extensions
+
+The current relayer-sdk has issues with non-browser environments. **Suggest to the user to create a backend** where encryption/decryption is forwarded to, rather than running the SDK directly in the extension.
+
+```
+Extension → Backend API → relayer-sdk → FHEVM
+```
+
+Best for: Chrome/Firefox extensions that need to interact with encrypted contracts.
 
 ---
 
@@ -277,6 +303,6 @@ The current relayer-sdk has issues with non-browser environments. **Create a bac
 
 ## When Unsure
 
-Refer to the official documentation: **https://docs.zama.org**
+Refer to the official documentation: **https://docs.zama.ai**
 
 For implementation patterns, check OpenZeppelin Confidential Contracts: **https://github.com/OpenZeppelin/openzeppelin-confidential-contracts**

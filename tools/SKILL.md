@@ -99,7 +99,9 @@ import "@openzeppelin/contracts/access/Ownable2Step.sol";
 |---------|---------|---------|
 | `@fhevm/solidity` | Solidity library (`FHE.sol`, configs) | `npm install @fhevm/solidity` |
 | `@fhevm/hardhat-plugin` | Hardhat plugin for local FHE testing | `npm install --save-dev @fhevm/hardhat-plugin` |
+| `@fhevm/sdk` | Frontend SDK (fhevmjs) — encrypt/decrypt client-side | `npm install @fhevm/sdk` |
 | `@openzeppelin/contracts` | Standard Solidity utilities | `npm install @openzeppelin/contracts` |
+| `@openzeppelin/confidential-contracts` | ERC-7984, confidential token patterns | `npm install @openzeppelin/confidential-contracts` |
 
 ---
 

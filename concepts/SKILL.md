@@ -177,4 +177,4 @@ euint64 real = FHE.fromExternal(externalHandle, inputProof);
 - **Zama Documentation:** https://docs.zama.ai/protocol
 - **FHEVM GitHub:** https://github.com/zama-ai/fhevm
 - **FHEVM Solidity Library:** https://github.com/zama-ai/fhevm/tree/main/lib
-- **FHESkills (for agents):** https://fheskills.com
+- **FHESkills (for agents):** https://github.com/zama-ai/fheskills

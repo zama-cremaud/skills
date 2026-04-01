@@ -299,10 +299,28 @@ EOAs temporarily delegate to smart contracts within a transaction. Best of both 
 
 **Impact:** Eliminates "approval fatigue," enables gasless transactions for EOA users.
 
+## ERC-7984: Confidential Wrapped Tokens (FHE)
+
+**The confidential token standard for FHEVM.** Wraps existing ERC-20 tokens into encrypted versions with private balances and transfers.
+
+**Key properties:**
+- All balances are `euint64` (encrypted) — no public `balanceOf()`
+- Transfer events emit addresses but NOT amounts (privacy-preserving)
+- Cannot `require()` on balances — uses `FHE.select()` for silent failure
+- Wrap: plaintext ERC-20 → encrypted ERC-7984 (instant)
+- Unwrap: encrypted ERC-7984 → plaintext ERC-20 (requires async decryption)
+
+**Official implementations:** Zama deploys wrappers for major tokens (cUSDC, cUSDT, cWETH). See `addresses/SKILL.md` for the full list.
+
+**OpenZeppelin implementation:** `@openzeppelin/confidential-contracts` provides `ERC7984`, `ERC7984ERC20Wrapper`, and extensions. See `building-blocks/SKILL.md` for code patterns.
+
+---
+
 ## Quick Standard Reference
 
 | Standard | What | Status |
 |----------|------|--------|
+| **ERC-7984** | **Confidential wrapped tokens (FHE)** | **✅ Live on FHEVM** |
 | ERC-8004 | Agent identity + reputation | ✅ Live Jan 2026 |
 | x402 | HTTP payments protocol | ✅ Production Q1 2026 |
 | EIP-3009 | Gasless token transfers | ✅ Live (USDC) |

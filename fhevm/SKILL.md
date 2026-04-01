@@ -289,7 +289,7 @@ euint64 value = FHE.select(sufficient, amount, FHE.asEuint64(0));
 
 ```solidity
 // ❌ MISLEADING — value 42 is visible to everyone onchain
-euint64 "secret" = FHE.asEuint64(42);
+euint64 notActuallySecret = FHE.asEuint64(42);
 
 // ✅ CORRECT — real secret comes from user input
 euint64 secret = FHE.fromExternal(externalHandle, proof);

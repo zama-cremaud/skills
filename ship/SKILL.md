@@ -13,13 +13,29 @@ description: End-to-end guide for AI agents — from a dApp idea to deployed pro
 
 **You put too much onchain.** Solidity is for ownership, transfers, and commitments. It's not a database. It's not an API. It's not a backend. If it doesn't involve trustless value transfer or a permanent commitment, it doesn't belong in a smart contract.
 
-**You skip chain selection.** Mainnet is cheaper than you think — an ETH transfer costs ~$0.004, a swap ~$0.04. The "Ethereum is expensive" narrative is outdated. But that doesn't mean everything belongs on mainnet. L2s aren't just "cheaper Ethereum" — each one has a unique superpower (Base has Coinbase distribution + smart wallets, Arbitrum has the deepest DeFi liquidity, Optimism has retroPGF + the Superchain). If your app needs high-frequency interactions or fits what makes an L2 special, build there. If you just need cheap and secure, mainnet works. Choose deliberately. Fetch `l2s/SKILL.md` and `gas/SKILL.md` for the full picture. Not sure Ethereum is the right chain at all? Fetch `why/SKILL.md`.
+**You skip chain selection.** Mainnet is cheaper than you think — an ETH transfer costs ~$0.004, a swap ~$0.04. The "Ethereum is expensive" narrative is outdated. But that doesn't mean everything belongs on mainnet. L2s aren't just "cheaper Ethereum" — each one has a unique superpower (Base has Coinbase distribution + smart wallets, Arbitrum has the deepest DeFi liquidity, Optimism has retroPGF + the Superchain). If your app needs high-frequency interactions or fits what makes an L2 special, build there. If you just need cheap and secure, mainnet works. Choose deliberately. Fetch `l2s/SKILL.md` and `gas/SKILL.md` for the full picture. Note: FHEVM is currently supported on Ethereum mainnet and Sepolia — chain selection is constrained by coprocessor availability.
 
 **You forget nothing is automatic.** Smart contracts don't run themselves. Every state transition needs a caller who pays gas and a reason to do it. If you can't answer "who calls this and why?" for every function, your contract has dead code. Fetch `concepts/SKILL.md` for the full mental model.
 
 ---
 
-## Phase 0 — Plan the Architecture
+## Step 1 — Ask What the User Wants
+
+**Before doing ANYTHING, ask the user:**
+
+> "What kind of project do you want to build?"
+> 1. **Smart contracts only** — Solidity + tests + deployment (use `fhevm-hardhat-template`)
+> 2. **Full-stack dApp** — contracts + React frontend (use `fhevm-react-template`)
+> 3. **Custom setup** — contracts + their own frontend/backend (Hardhat template + `@fhevm/sdk`)
+> 4. **Make an existing project confidential** — add encryption to specific values (fetch `migration/SKILL.md`)
+
+**Do not assume they want contracts-only.** Many developers want a frontend from the start.
+
+See `production-ready/SKILL.md` for detailed setup instructions for each option.
+
+---
+
+## Step 2 — Plan the Architecture
 
 Do this BEFORE writing any code. Every hour spent here saves ten hours of rewrites.
 
@@ -184,11 +200,11 @@ Find your archetype below. Each tells you exactly how many contracts you need, w
 - Overcomplicating payments (x402 handles HTTP-native payments)
 - Ignoring key management (fetch `wallets/SKILL.md`)
 
-**Fetch sequence:** `standards/SKILL.md` → `wallets/SKILL.md` → `tools/SKILL.md` → `orchestration/SKILL.md`
+**Fetch sequence:** `standards/SKILL.md` → `wallets/SKILL.md` → `tools/SKILL.md`
 
 ---
 
-## Phase 1 — Build Contracts
+## Step 3 — Build Contracts
 
 **Fetch:** `standards/SKILL.md`, `building-blocks/SKILL.md`, `addresses/SKILL.md`, `security/SKILL.md`
 
@@ -200,11 +216,11 @@ Key guidance:
 - Use `SafeERC20` for all token operations
 - Run through the security checklist in `security/SKILL.md` before moving to Phase 2
 
-For SE2 projects, follow `orchestration/SKILL.md` Phase 1 for the exact build sequence.
+Use the template chosen in Step 1. See `production-ready/SKILL.md` for setup details.
 
 ---
 
-## Phase 2 — Test
+## Step 4 — Test
 
 **Fetch:** `testing/SKILL.md`
 
@@ -223,38 +239,41 @@ After testing, run a security audit — especially if your contracts handle real
 
 ---
 
-## Phase 3 — Build Frontend
+## Step 5 — Build Frontend
 
-**Fetch:** `orchestration/SKILL.md`, `frontend-ux/SKILL.md`, `tools/SKILL.md`
+**Fetch:** `frontend-ux/SKILL.md`, `tools/SKILL.md`
+
+**Skip this step if the user chose "smart contracts only" in Step 1.**
 
 Key guidance:
-- Use Scaffold-ETH 2 hooks, not raw wagmi — `useScaffoldReadContract`, `useScaffoldWriteContract`
-- Implement the three-button flow: Switch Network → Approve → Execute
-- Show loading states on every async operation (blockchains take 5-12 seconds)
-- Display token amounts in human-readable form with `formatEther`/`formatUnits`
-- Never use infinite approvals
+- If using `fhevm-react-template`, the basic setup is already done
+- If using a custom frontend, install `@fhevm/sdk` and follow `frontend-ux/SKILL.md`
+- Implement the 6-state button flow: idle → encrypting → confirming → pending → decrypting → complete
+- Handle all 3 decryption types: public decrypt, user decrypt, delegate decrypt
+- Cache EIP-712 signatures to avoid repeated wallet popups
+- Show "Decrypting..." states — FHE decryption is async, not instant
+- Implement XSS prevention for cached signatures
 
 ---
 
-## Phase 4 — Ship to Production
+## Step 6 — Ship to Production
 
-**Fetch:** `wallets/SKILL.md`, `frontend-playbook/SKILL.md`, `gas/SKILL.md`
+**Fetch:** `production-ready/SKILL.md`, `deployment/SKILL.md`, `gas/SKILL.md`
 
 ### Contract Deployment
-1. Set gas settings appropriate for the target chain (fetch `gas/SKILL.md`)
-2. Deploy and verify contracts on block explorer
-3. Transfer ownership to a multisig (Gnosis Safe) — never leave a single EOA as owner in production
-4. Post-deploy checks: call every read function, verify state, test one small transaction
+1. Run through the pre-production checklist in `production-ready/SKILL.md`
+2. Deploy to Sepolia first — test the full flow (encrypt, transact, decrypt)
+3. Deploy and verify contracts on block explorer
+4. Transfer ownership to a multisig (Gnosis Safe) — never leave a single EOA as owner in production
+5. Post-deploy checks: mint, transfer, decrypt on testnet before mainnet
 
 ### Frontend Deployment
-Fetch `frontend-playbook/SKILL.md` for the full pipeline:
-- **IPFS** — decentralized, censorship-resistant, permanent
-- **Vercel** — fast, easy, but centralized
-- **ENS subdomain** — human-readable URL pointing to IPFS
+- **Vercel** — recommended for fheskills projects
+- Or any static hosting that serves markdown
 
 ### Pre-Ship QA
 
-Before going live, run the QA checklist. Fetch `qa/SKILL.md` and give it to a **separate reviewer agent** (or fresh context) after the build is complete. It covers the bugs AI agents actually ship — validated by baseline testing against stock LLMs.
+Before going live, run through the checklists in `production-ready/SKILL.md` — covers both smart contract and frontend requirements. For deeper security review, fetch `audit/SKILL.md` and give it to a **separate reviewer agent** in fresh context.
 
 ### Post-Launch
 - Set up event monitoring with The Graph or Dune (fetch `indexing/SKILL.md`)
@@ -285,14 +304,17 @@ Before going live, run the QA checklist. Fetch `qa/SKILL.md` and give it to a **
 
 - [ ] Identify what goes onchain vs offchain (use the Litmus Test above)
 - [ ] Count your contracts (aim for 1-2 for MVP)
-- [ ] Pick your chain (mainnet is cheap now — pick an L2 only if its superpower fits your app)
+- [ ] Pick your chain (FHEVM currently supports Ethereum mainnet + Sepolia)
 - [ ] Audit every state transition (who calls it? why?)
-- [ ] Write contracts using OpenZeppelin base contracts
-- [ ] Test with Foundry (unit + fuzz + fork tests)
+- [ ] Write contracts inheriting `ZamaEthereumConfig`, using OpenZeppelin Confidential Contracts
+- [ ] ACL grants on every encrypted state update (`FHE.allowThis()` + `FHE.allow()`)
+- [ ] No `if`/`require` on encrypted values — only `FHE.select()`
+- [ ] Estimate HCU for every function (stay under 20M global, 5M depth)
+- [ ] Test with Hardhat + fhevm-hardhat-plugin
 - [ ] Audit with a fresh agent (fetch `audit/SKILL.md`)
-- [ ] Deploy, verify, transfer ownership to multisig
-- [ ] Ship frontend (IPFS or Vercel)
-- [ ] Run pre-ship QA with a separate reviewer (fetch `qa/SKILL.md`)
+- [ ] Deploy to Sepolia first, verify, transfer ownership to multisig
+- [ ] Ship frontend with all 3 decryption types handled
+- [ ] Run pre-production checklist (fetch `production-ready/SKILL.md`)
 
 ---
 
@@ -302,11 +324,11 @@ Use this to know which skills to fetch at each phase:
 
 | Phase | What you're doing | Skills to fetch |
 |-------|-------------------|-----------------|
-| **Plan** | Architecture, chain selection | `ship/` (this), `concepts/`, `l2s/`, `gas/`, `why/` |
-| **Contracts** | Writing Solidity | `standards/`, `building-blocks/`, `addresses/`, `security/` |
+| **Plan** | Architecture, chain selection | `ship/` (this), `concepts/`, `l2s/`, `gas/` |
+| **Contracts** | Writing encrypted Solidity | `fhevm/`, `acl/`, `building-blocks/`, `addresses/`, `security/` |
 | **Test** | Testing contracts | `testing/` |
 | **Audit** | Security review (fresh agent) | `audit/` |
-| **Frontend** | Building UI | `orchestration/`, `frontend-ux/`, `tools/` |
-| **Production** | Deploy, QA, monitor | `wallets/`, `frontend-playbook/`, `qa/`, `indexing/` |
+| **Frontend** | Building UI | `frontend-ux/`, `tools/` |
+| **Production** | Deploy, go live | `production-ready/`, `deployment/`, `wallets/`, `indexing/` |
 
-**Base URLs:** All skills are at `https://ethskills.com/<skill>/SKILL.md`
+**Base URLs:** All skills are at `https://fheskills.com/<skill>/SKILL.md`

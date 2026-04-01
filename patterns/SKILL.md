@@ -194,7 +194,7 @@ contract SealedBidAuction is ZamaEthereumConfig {
         bytes calldata inputProof
     ) public payable {
         require(block.timestamp < deadline, "Auction ended");
-        require(bids[msg.sender].length == 0 || !FHE.isInitialized(bids[msg.sender]), "Already bid");
+        require(!FHE.isInitialized(bids[msg.sender]), "Already bid");
 
         euint64 bidAmount = FHE.fromExternal(encryptedBid, inputProof);
         bids[msg.sender] = bidAmount;

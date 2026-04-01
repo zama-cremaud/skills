@@ -15,7 +15,7 @@ description: Verified FHEVM and Zama protocol contract addresses across all supp
 
 ---
 
-## Recommended: Use ZamaEthereumConfig for configuration on ethereum
+## Recommended: Use ZamaEthereumConfig for Configuration on Ethereum
 
 ```solidity
 import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";

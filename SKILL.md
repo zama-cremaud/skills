@@ -127,15 +127,53 @@ The final checklist before going live with an FHEVM dApp.
 - Templates: `fhevm-hardhat-template` for contracts, `fhevm-react-template` for full-stack.
 - For extensions: create a backend proxy for encryption/decryption, don't run SDK in extension directly.
 
-### Ethskills Integration
-These skills are adapted from [ethskills](https://ethskills.com) and provide foundational Ethereum knowledge:
-- **[Concepts](https://fheskills.com/concepts/SKILL.md)** — "Nothing is automatic," incentive design, state machines
-- **[Standards](https://fheskills.com/standards/SKILL.md)** — ERC-20, ERC-721, ERC-7984, ERC-4337, ERC-8004
-- **[L2s](https://fheskills.com/l2s/SKILL.md)** — Layer 2 landscape, chain selection
-- **[Wallets](https://fheskills.com/wallets/SKILL.md)** — EOAs, smart wallets, multisig, account abstraction
-- **[Indexing](https://fheskills.com/indexing/SKILL.md)** — Events, The Graph, querying onchain data
-- **[Audit](https://fheskills.com/audit/SKILL.md)** — 500+ item security audit system across 19 domains
-- **[Frontend Playbook](https://fheskills.com/frontend-playbook/SKILL.md)** — IPFS deployment, Vercel config, ENS subdomains
+---
+
+## Ethereum Development Skills
+
+These skills cover general Ethereum development — Solidity, Foundry, Scaffold-ETH 2, DeFi, L2s, wallets, and more. From [ethskills](https://ethskills.com). Use these for standard Ethereum development alongside or independently of FHE.
+
+### [Ship](https://fheskills.com/ship/SKILL.md) — Full dApp Lifecycle
+End-to-end guide from idea to deployed dApp. Architecture decisions, contract/test/frontend phases, chain selection, anti-patterns.
+
+### [Concepts](https://fheskills.com/concepts/SKILL.md) — Mental Models
+"Nothing is automatic," incentive design, state machines. The foundational thinking for building onchain.
+
+### [Standards](https://fheskills.com/standards/SKILL.md) — Token & Protocol Standards
+ERC-20, ERC-721, ERC-1155, ERC-4337, ERC-7984, ERC-8004, EIP-7702, x402. When to use each.
+
+### [Building Blocks (Ethereum)](https://fheskills.com/building-blocks/SKILL.md) — DeFi Composability
+Uniswap V4 hooks, Aave flash loans, ERC-4626 vaults, Aerodrome/GMX/Pendle. How to compose protocols.
+
+### [Security (Ethereum)](https://fheskills.com/security/SKILL.md) — Solidity Security
+Reentrancy, oracle manipulation, SafeERC20, vault inflation, MEV sandwich attacks, proxy patterns.
+
+### [Testing (Ethereum)](https://fheskills.com/testing/SKILL.md) — Foundry Testing
+Unit tests, fuzz testing, fork testing, invariant testing with Foundry. What to test, what not to test.
+
+### [L2s](https://fheskills.com/l2s/SKILL.md) — Layer 2 Landscape
+Arbitrum, Base, Optimism, zkSync, Scroll, Unichain, Celo. Chain selection, deployment, bridging.
+
+### [Gas](https://fheskills.com/gas/SKILL.md) — Ethereum Gas Costs
+Current gas prices (post-Fusaka), mainnet vs L2 costs, fee settings. "Ethereum is expensive" is false in 2026.
+
+### [Wallets](https://fheskills.com/wallets/SKILL.md) — Wallet Management
+EOAs, smart contract wallets, Safe multisig, EIP-7702, account abstraction. Key safety for AI agents.
+
+### [Indexing](https://fheskills.com/indexing/SKILL.md) — Onchain Data
+Events, The Graph, Dune Analytics. Why you can't loop through blocks and what to use instead.
+
+### [Audit](https://fheskills.com/audit/SKILL.md) — Smart Contract Audit
+500+ item security audit system across 19 domains. Parallel sub-agents for comprehensive coverage.
+
+### [Frontend Playbook](https://fheskills.com/frontend-playbook/SKILL.md) — Deploy to Production
+Scaffold-ETH 2 fork mode, IPFS deployment, Vercel config, ENS subdomains. The full build-to-production pipeline.
+
+### [Frontend UX (Ethereum)](https://fheskills.com/frontend-ux/SKILL.md) — dApp UI Rules
+Button states, approval flows, address display, USD values, RPC config. Built around Scaffold-ETH 2.
+
+### [Addresses (Ethereum)](https://fheskills.com/addresses/SKILL.md) — Protocol Addresses
+Verified addresses for Uniswap, Aave, Compound, and major protocols across mainnet and L2s.
 
 ---
 
@@ -143,14 +181,20 @@ These skills are adapted from [ethskills](https://ethskills.com) and provide fou
 
 | I'm doing... | Fetch these skills |
 |--------------|-------------------|
+| **FHE Development** | |
 | First time with FHEVM | `ship/`, `concepts/` |
 | Writing encrypted contracts | `fhevm/`, `acl/`, `security/`, `gas/` |
 | Building a confidential token | `patterns/`, `building-blocks/`, `acl/` |
 | Testing encrypted contracts | `testing/` |
-| Building a frontend | `frontend-ux/`, `frontend/`, `tools/` |
-| Deploying to production | `production-ready/`, `deployment/`, `addresses/` |
+| Building an FHE frontend | `frontend-ux/`, `tools/` |
+| Deploying FHE contracts | `production-ready/`, `deployment/`, `addresses/` |
 | Adding privacy to existing contracts | `migration/`, `fhevm/`, `acl/` |
-| Reviewing for security | `security/`, `acl/`, `audit/` |
 | Optimizing FHE gas | `gas/` |
-| Composing with existing DeFi | `building-blocks/`, `addresses/` |
-| Starting a new project | `production-ready/` (has templates) |
+| **General Ethereum** | |
+| Building a standard dApp | `ship/`, `concepts/`, `standards/` |
+| DeFi composability | `building-blocks/`, `addresses/` |
+| Choosing a chain / L2 | `l2s/`, `gas/` |
+| Solidity security review | `security/`, `audit/` |
+| Frontend deployment | `frontend-playbook/`, `frontend-ux/` |
+| Wallet / key management | `wallets/` |
+| Querying onchain data | `indexing/` |
