@@ -5,6 +5,10 @@ description: Complete guide to writing encrypted smart contracts with FHEVM. Cov
 
 # Solidity — Encrypted Smart Contracts with FHEVM
 
+> **Setting up a new project?** See [setup-solidity-contracts/SKILL.md](setup-solidity-contracts/SKILL.md) for Foundry and Hardhat project scaffolding.
+
+---
+
 ## What You Probably Got Wrong
 
 **You used `euint256` for everything.** `euint64` is the standard for balances. Larger types cost dramatically more HCU for every operation.
@@ -35,6 +39,8 @@ description: Complete guide to writing encrypted smart contracts with FHEVM. Cov
 
 ## Contract Setup
 
+Every FHEVM contract inherits `ZamaEthereumConfig` — it auto-configures the coprocessor for mainnet and Sepolia.
+
 ```solidity
 // SPDX-License-Identifier: BSD-3-Clause-Clear
 pragma solidity ^0.8.24;
@@ -43,25 +49,11 @@ import "@fhevm/solidity/lib/FHE.sol";
 import {ZamaEthereumConfig} from "@fhevm/solidity/config/ZamaConfig.sol";
 
 contract MyContract is ZamaEthereumConfig {
-    // ZamaEthereumConfig auto-configures the coprocessor
-    // for Ethereum mainnet (chainId=1) or Sepolia (chainId=11155111)
-
     euint64 private secretValue;
 }
 ```
 
-Manual configuration (if not using ZamaEthereumConfig):
-
-```solidity
-import "@fhevm/solidity/lib/FHE.sol";
-import {CoprocessorSetup} from "./CoprocessorSetup.sol";
-
-contract MyContract {
-    constructor() {
-        FHE.setCoprocessor(CoprocessorSetup.defaultConfig());
-    }
-}
-```
+For full project scaffolding (Foundry with forge-fhevm, or Hardhat template), see [setup-solidity-contracts/SKILL.md](setup-solidity-contracts/SKILL.md).
 
 ---
 
