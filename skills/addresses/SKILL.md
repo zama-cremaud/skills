@@ -80,6 +80,19 @@ Official confidential wrappers for major ERC-20 tokens. These wrap a standard to
 
 **Wrappers Registry:** [`0xeb5015fF021DB115aCe010f23F55C2591059bBA0`](https://etherscan.io/address/0xeb5015fF021DB115aCe010f23F55C2591059bBA0)
 
+### Underlying ERC-20 Tokens (Ethereum Mainnet)
+
+These are the standard ERC-20 tokens that the confidential wrappers above wrap. You need these addresses when calling `wrap()` or `approve()` on the underlying token.
+
+| Token | Address | Decimals |
+|-------|---------|----------|
+| USDC | [`0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48`](https://etherscan.io/address/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48) | 6 |
+| USDT | [`0xdAC17F958D2ee523a2206206994597C13D831ec7`](https://etherscan.io/address/0xdAC17F958D2ee523a2206206994597C13D831ec7) | 6 |
+| DAI | [`0x6B175474E89094C44Da98b954EedeAC495271d0F`](https://etherscan.io/address/0x6B175474E89094C44Da98b954EedeAC495271d0F) | 18 |
+| WETH | [`0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2`](https://etherscan.io/address/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2) | 18 |
+
+**Remember:** USDC and USDT have 6 decimals, not 18. Never hardcode `1e18` for these tokens.
+
 ### Sepolia Testnet (Mock Wrappers)
 
 Testnet wrappers use mocked mintable ERC-20 tokens as underlying. Find the underlying address via each wrapper's `underlying()` view function.
