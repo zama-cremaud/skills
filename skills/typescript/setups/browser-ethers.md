@@ -1,0 +1,37 @@
+# Browser + ethers setup
+
+**Canonical doc:** `github.com/zama-ai/sdk/docs/gitbook/src/tutorials/quick-start.md` (ethers tab)
+
+```bash
+pnpm add @zama-fhe/sdk ethers
+```
+
+`EthersSigner` in the browser takes the **raw EIP-1193 provider**, not an `ethers.Wallet`:
+
+```ts
+import { ZamaSDK, RelayerWeb, SepoliaConfig, indexedDBStorage } from "@zama-fhe/sdk";
+import { EthersSigner } from "@zama-fhe/sdk/ethers";
+
+const signer = new EthersSigner({ ethereum: window.ethereum! });
+
+const sdk = new ZamaSDK({
+  relayer: new RelayerWeb({
+    getChainId: () => signer.getChainId(),
+    transports: {
+      [SepoliaConfig.chainId]: {
+        ...SepoliaConfig,
+        relayerUrl: "https://your-app.com/api/relayer/11155111",
+        network: "https://sepolia.infura.io/v3/YOUR_KEY",
+      },
+    },
+  }),
+  signer,
+  storage: indexedDBStorage,
+});
+
+const token = sdk.createToken("0xYourEncryptedERC20");
+await token.shield(1000n);
+await token.confidentialTransfer("0xRecipient", 500n);
+```
+
+Needs COOP/COEP headers — see `skill.md` → Universal gotchas.
