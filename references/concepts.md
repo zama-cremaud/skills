@@ -1,9 +1,4 @@
----
-name: general
-description: Integration guide for the Zama Protocol (FHEVM). Covers protocol architecture, encrypted computation model, Relayer API, ACL, decryption flows, HCU gas model, project planning, and production readiness. Fetch this first when planning or building on the Zama Protocol.
----
-
-# Zama Protocol — Integration Guide
+# Zama Protocol — Concepts & Integration Guide
 
 You are an assistant that helps developers integrate with the **Zama Protocol** — the system that enables smart contracts to compute on encrypted data using Fully Homomorphic Encryption (FHE).
 
@@ -417,29 +412,15 @@ A common mistake: encrypting computation in the middle while leaving entry and e
 
 ### Confidential Tokens — Use ERC-7984
 
-For anything involving confidential tokens, use the **ERC-7984** implementation from [OpenZeppelin Confidential Contracts](https://github.com/OpenZeppelin/openzeppelin-confidential-contracts). Don't roll your own. For tokens that already have deployed wrappers (cUSDC, cUSDT, cWETH), use those — see `addresses/SKILL.md`.
+For anything involving confidential tokens, use the **ERC-7984** implementation from [OpenZeppelin Confidential Contracts](https://github.com/OpenZeppelin/openzeppelin-confidential-contracts). Don't roll your own. For tokens that already have deployed wrappers (cUSDC, cUSDT, cWETH), use those — see `references/addresses.md`.
 
 ### Choose Your Setup
 
-**Foundry:**
-```bash
-git clone https://github.com/zama-ai/fhevm-foundry-template
-```
-Uses [forge-fhevm](https://github.com/zama-ai/forge-fhevm) + OpenZeppelin Confidential Contracts.
+Setup instructions live in the per-environment files. Read **one** matching your stack:
 
-**Hardhat:**
-```bash
-git clone https://github.com/zama-ai/fhevm-hardhat-template
-```
-Comes with `@fhevm/hardhat-plugin` for local FHE mock testing.
-
-**Frontend:**
-```bash
-git clone https://github.com/zama-ai/fhevm-react-template
-```
-Or add `@zama-fhe/sdk` to your own frontend.
-
-For detailed setup instructions, see [solidity/setup/SKILL.md](../solidity/setup/SKILL.md).
+- **Solidity + Foundry** (default) — `references/solidity/setups/foundry.md`
+- **Solidity + Hardhat** — `references/solidity/setups/hardhat.md`
+- **Frontend / backend / extension** — pick one from `references/typescript/setups/` (React+wagmi is the default)
 
 ### Key Packages
 
@@ -482,14 +463,14 @@ Sepolia testnet does not require an API key.
 
 ## Skill Routing
 
-| Phase | Skill to fetch |
-|-------|----------------|
-| **Planning & architecture** | `general/SKILL.md` (this skill) |
-| **Writing Solidity contracts** | `solidity/SKILL.md` |
-| **Building frontend/backend** | `typescript/SKILL.md` |
-| **Contract addresses** | `addresses/SKILL.md` |
+| Phase | Reference to read |
+|-------|-------------------|
+| **Planning & architecture** | `references/concepts.md` (this file) |
+| **Writing Solidity contracts** | `references/solidity/solidity.md` |
+| **Building frontend/backend** | `references/typescript/typescript.md` |
+| **Contract addresses** | `references/addresses.md` |
 
-**Base URL:** `https://fheskills.com/skills/<skill>/SKILL.md`
+**Base URL:** `https://fheskills.com/SKILL.md`
 
 ---
 
@@ -521,7 +502,4 @@ Full spec index: `architecture/README.md`. RFCs: `rfcs/README.md`.
 - **FHEVM Solidity:** https://github.com/zama-ai/fhevm
 - **Forge FHEVM:** https://github.com/zama-ai/forge-fhevm
 - **OpenZeppelin Confidential Contracts:** https://github.com/OpenZeppelin/openzeppelin-confidential-contracts
-- **Foundry Template:** https://github.com/zama-ai/fhevm-foundry-template
-- **Hardhat Template:** https://github.com/zama-ai/fhevm-hardhat-template
-- **React Template:** https://github.com/zama-ai/fhevm-react-template
 - **Zama Protocol Whitepaper:** https://github.com/zama-ai/fhevm/blob/main/fhevm-whitepaper.pdf

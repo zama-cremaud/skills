@@ -1,81 +1,91 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working in this repository.
+Guidance for Claude Code when working in this repository.
 
-## Project Overview
+## Project
 
-**fheskills** is the external-facing skill set for AI agents building encrypted smart contracts with Zama's FHEVM.
+**fheskills** — the external-facing skill set for AI agents building confidential smart contracts with Zama's FHEVM.
 
-**Deployed at:** https://fheskills.com
-**License:** BSD-3-Clause-Clear
+- **Deployed:** https://fheskills.com
+- **Install:** `npx skills add zama-ai/fheskills`
+- **License:** BSD-3-Clause-Clear
 
 ## Structure
 
+This repo **is** a single skill (`name: zama`). `SKILL.md` at the root is the router that always loads; everything else under `references/` is read on demand.
+
 ```
 fheskills/
-├── SKILL.md                    # Router — links to all skills
-├── AGENTS.md                   # Agent discovery
-├── skills/
-│   ├── general/SKILL.md        # Protocol architecture, planning, integration guide
-│   ├── solidity/SKILL.md       # Encrypted contract development reference
-│   ├── solidity/setup/SKILL.md # Foundry + Hardhat project scaffolding
-│   ├── typescript/SKILL.md     # Frontend/backend SDK integration
-│   └── addresses/SKILL.md      # Verified contract addresses
-├── .claude-plugin/plugin.json  # Claude plugin metadata
-├── index.html                  # Landing page
-└── vercel.json                 # Deployment config
+├── SKILL.md                        # Router — gotchas + task → reference map (always loaded)
+├── AGENTS.md                       # Agent discovery
+├── references/
+│   ├── concepts.md                 # FHEVM mental model, planning, production readiness
+│   ├── addresses.md                # Verified contract addresses
+│   ├── solidity/
+│   │   ├── solidity.md             # Encrypted Solidity router + config
+│   │   ├── erc7984.md              # Confidential token recipe + interface
+│   │   ├── fhe-advanced.md         # Raw FHE ops, manual ACL, production decryption
+│   │   └── setups/
+│   │       ├── foundry.md          # Default
+│   │       └── hardhat.md
+│   └── typescript/
+│       ├── typescript.md           # SDK mental model + environment matrix
+│       └── setups/
+│           ├── react-wagmi.md      # Default
+│           ├── browser-viem.md
+│           ├── browser-ethers.md
+│           ├── node-backend.md
+│           ├── extension-mv3.md
+│           └── local-hardhat.md
+├── .claude-plugin/plugin.json
+├── index.html
+└── vercel.json
 ```
 
 ## Key Rules
 
 **Say "FHEVM"** — uppercase. Not "fhEVM" or "FheVM." Zama convention.
 
-**Skills teach corrections, not tutorials.** Every line must either fill a verified LLM blind spot or teach essential concepts. If stock LLMs already know it AND humans don't need it explained, cut it.
+**Skills teach corrections, not tutorials.** Every line must either fill a verified LLM blind spot or teach an essential concept. If a stock LLM already gets it right AND humans don't need it explained, cut it.
 
-**Link to living code, don't embed it.** Code in a skill file can't be tested, can't be linted, and goes stale silently. Point to:
+**Link to living code, don't embed it.** Code in a skill file can't be tested or linted and goes stale. Point to:
 - [OpenZeppelin Confidential Contracts](https://github.com/OpenZeppelin/openzeppelin-confidential-contracts) — ERC-7984, token patterns
 - [zama-ai/dapps](https://github.com/zama-ai/dapps/tree/main/packages/hardhat/contracts) — example contracts
 - [zama-ai/protocol-apps](https://github.com/zama-ai/protocol-apps/tree/main/contracts) — deployed contracts
 
-**Use ERC-7984** for any confidential token work. Don't roll your own.
+**Use ERC-7984** for any confidential token work. Never reimplement encrypted balances, allowances, or transfers.
 
-## Editing Skills
+**Router + references pattern.** `SKILL.md` is the single always-loaded router. Domain files (`references/solidity/solidity.md`, `references/typescript/typescript.md`) are secondary routers — each has its own `setups/` folder of per-environment files read only when the task needs them. Don't inline setup-specific content into the top-level router.
 
-1. Edit skills in `skills/<skill>/SKILL.md`
-2. Test locally: `python3 -m http.server 8000`
-3. Verify at `http://localhost:8000`
+## Editing the skill
+
+1. Edit `SKILL.md` for the top-level router, or the relevant file under `references/`.
+2. Test locally: `python3 -m http.server 8000` from this directory.
+3. Verify at `http://localhost:8000`.
 
 ### Before adding content
 
 1. Check official docs: https://docs.zama.ai
-2. Verify API against latest `@fhevm/solidity` package
+2. Verify the API against the latest `@fhevm/solidity` package.
 3. Test with a stock LLM — does it actually get this wrong?
-4. If the LLM already knows it, don't add it
+4. If the LLM already knows it AND humans don't need it explained, don't add it.
 
-## Starting Templates
+## Project setup
 
-**Foundry:**
-```bash
-git clone https://github.com/zama-ai/fhevm-foundry-template
-```
+When a user needs to start or configure a project, point them at the per-environment setup files:
 
-**Hardhat:**
-```bash
-git clone https://github.com/zama-ai/fhevm-hardhat-template
-```
+- **Solidity:** `references/solidity/setups/foundry.md` (default) or `references/solidity/setups/hardhat.md`
+- **TypeScript:** `references/typescript/setups/` — one file per stack (React+wagmi, viem, ethers, Node, MV3, local Hardhat)
 
-**Frontend:**
-```bash
-git clone https://github.com/zama-ai/fhevm-react-template
-```
+Setup content lives in those files on purpose — it's where it gets tested and kept current. Don't duplicate setup steps into the top-level routers or link out to external starter templates.
 
 ## Deployment
 
-Static markdown files deployed via Vercel. No build step. Automatic on push to main.
+Static markdown on Vercel. No build step. Automatic on push to `main`.
 
 ## References
 
 - **Zama Docs:** https://docs.zama.ai
-- **Tech Specs:** https://github.com/zama-ai/tech-spec/tree/new-tech-specs
+- **Protocol addresses:** https://docs.zama.org/protocol/protocol-apps/addresses
 - **FHEVM Solidity:** https://github.com/zama-ai/fhevm
 - **OpenZeppelin Confidential Contracts:** https://github.com/OpenZeppelin/openzeppelin-confidential-contracts

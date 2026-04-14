@@ -1,6 +1,6 @@
 {
   "name": "fheskills",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The missing knowledge between AI agents and production encrypted smart contracts. FHE on Ethereum — encrypted types, ACL, patterns, security, deployment.",
   "author": {
     "name": "Zama Team",
@@ -23,24 +23,9 @@
   ],
   "skills": [
     {
-      "name": "general",
-      "description": "FHE concepts, project planning, architecture, toolchain, production readiness",
-      "path": "skills/general/SKILL.md"
-    },
-    {
-      "name": "solidity",
-      "description": "Encrypted types, FHE operations, ACL, patterns, gas (HCU), security, testing, deployment, migration",
-      "path": "skills/solidity/SKILL.md"
-    },
-    {
-      "name": "typescript",
-      "description": "Frontend/backend development — @zama-fhe/sdk, encryption/decryption flows, button states, visual design, XSS prevention",
-      "path": "skills/typescript/SKILL.md"
-    },
-    {
-      "name": "addresses",
-      "description": "Verified FHEVM contract addresses for mainnet and Sepolia",
-      "path": "skills/addresses/SKILL.md"
+      "name": "zama",
+      "description": "Build confidential smart contracts and dApps on Zama's FHEVM — concepts, Solidity patterns, ERC-7984, TypeScript SDK integration, verified addresses.",
+      "path": "SKILL.md"
     }
   ]
 }

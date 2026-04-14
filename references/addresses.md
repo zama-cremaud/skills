@@ -1,8 +1,3 @@
----
-name: addresses
-description: Verified FHEVM and Zama protocol contract addresses. Use this instead of guessing or hallucinating addresses. Full list — https://docs.zama.org/protocol/protocol-apps/addresses.
----
-
 # Contract Addresses
 
 **Full address list:** https://docs.zama.org/protocol/protocol-apps/addresses

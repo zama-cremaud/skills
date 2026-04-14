@@ -1,20 +1,10 @@
----
-name: zama-solidity
-description: Guide for building confidential smart contracts on Zama's fhEVM. Triggers when user mentions confidential, private, encrypted, FHE, or secret contracts/tokens/data. Covers ERC-7984 confidential tokens, ACL, encrypted types, and Hardhat/Foundry test setup.
----
+# Zama Solidity — Confidential Contracts
 
-# Zama Solidity Skill
+This reference covers config and the FHE gotchas that apply to every contract. Pair it with:
 
-## How to use this skill
-
-This skill is split into a small router (this file) plus reference files. Read **only** what the task needs:
-
-1. **Always** read this file — it covers config and the FHE gotchas that apply to every contract.
-2. Pick a build/test environment and read **one** setup file. If the user does not specify, **default to Foundry**:
-   - Foundry (default) → `setups/foundry.md`
-   - Hardhat → `setups/hardhat.md`
-3. Read `references/erc7984.md` **if** the user wants a confidential token (encrypted ERC20, private-balance token, FHE token). Contains the mint/burn recipe, the full ERC-7984 interface, and extensions.
-4. Read `references/fhe-advanced.md` **only if** you go beyond `ERC7984`'s built-ins — i.e. you write FHE arithmetic or comparisons yourself, manage ACL by hand, do production decryption, or use raw encrypted types.
+- **One setup file**: `setups/foundry.md` (default) or `setups/hardhat.md`
+- `erc7984.md` — if the user wants a confidential token (encrypted ERC20, private-balance token, FHE token). Mint/burn recipe, full ERC-7984 interface, extensions.
+- `fhe-advanced.md` — only if going beyond `ERC7984`'s built-ins: hand-written FHE arithmetic/comparisons, manual ACL, production decryption, raw encrypted types.
 
 ## Configuration
 
@@ -22,7 +12,7 @@ This skill is split into a small router (this file) plus reference files. Read *
 
 ## Confidential Tokens
 
-For any confidential token (encrypted ERC20, private-balance token, FHE token), use **ERC-7984** from OpenZeppelin's confidential contracts library. Recipe, interface, and extensions in `references/erc7984.md`. Never reimplement encrypted balances, allowances, or transfers.
+For any confidential token (encrypted ERC20, private-balance token, FHE token), use **ERC-7984** from OpenZeppelin's confidential contracts library. Recipe, interface, and extensions in `erc7984.md`. Never reimplement encrypted balances, allowances, or transfers.
 
 ## Gotchas (read before writing any FHE code)
 

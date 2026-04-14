@@ -54,31 +54,35 @@
   <p class="subtitle">The missing knowledge between AI agents and production encrypted smart contracts.</p>
 
   <div class="usage">
-    <p><strong>For AI agents:</strong> Fetch skills directly.</p>
-    <code>https://fheskills.com/skills/general/SKILL.md</code>
-    <code>https://fheskills.com/skills/solidity/SKILL.md</code>
-    <code>https://fheskills.com/skills/typescript/SKILL.md</code>
+    <p><strong>For AI agents:</strong> Fetch the skill directly.</p>
+    <code>https://fheskills.com/SKILL.md</code>
+    <p style="color:#888; margin-top:0.75rem; font-size:0.9rem;">One router, then on-demand references for the task at hand.</p>
   </div>
 
-  <h2>3 Skills — That's It</h2>
+  <h2>What's inside</h2>
 
   <div class="skill">
-    <div class="skill-name"><a href="/skills/general/SKILL.md">general</a> — Start here</div>
-    <div class="skill-desc">FHE concepts, project planning, architecture, toolchain, production readiness. Fetch first to plan your development or answer questions about FHEVM.</div>
-  </div>
-
-  <div class="skill">
-    <div class="skill-name"><a href="/skills/solidity/SKILL.md">solidity</a></div>
-    <div class="skill-desc">Encrypted types, FHE operations, ACL, patterns (confidential ERC-20, voting, auctions), gas optimization (HCU), security, testing, deployment, migration. Everything for writing encrypted smart contracts.</div>
+    <div class="skill-name"><a href="/SKILL.md">SKILL.md</a> — the router</div>
+    <div class="skill-desc">Non-negotiable FHEVM gotchas plus a task → reference map. Read this first; it points at the right file for what you're building.</div>
   </div>
 
   <div class="skill">
-    <div class="skill-name"><a href="/skills/typescript/SKILL.md">typescript</a></div>
-    <div class="skill-desc">@zama-fhe/sdk, @zama-fhe/react-sdk, encryption/decryption flows, 3 decryption types, button states, visual design, XSS prevention, key management. Everything for frontend and backend development.</div>
+    <div class="skill-name"><a href="/references/concepts.md">references/concepts.md</a></div>
+    <div class="skill-desc">FHE concepts, protocol architecture, project planning, production readiness. Read when deciding whether FHE fits your use case.</div>
   </div>
 
   <div class="skill">
-    <div class="skill-name"><a href="/skills/addresses/SKILL.md">addresses</a></div>
+    <div class="skill-name"><a href="/references/solidity/solidity.md">references/solidity/</a></div>
+    <div class="skill-desc">Encrypted Solidity — types, ACL, HCU gas, ERC-7984 confidential tokens, advanced FHE ops, plus Foundry and Hardhat setup files.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/references/typescript/typescript.md">references/typescript/</a></div>
+    <div class="skill-desc">SDK integration — mental model, environment matrix, per-stack setups for React+wagmi, viem, ethers, Node.js, MV3 extensions, local Hardhat.</div>
+  </div>
+
+  <div class="skill">
+    <div class="skill-name"><a href="/references/addresses.md">references/addresses.md</a></div>
     <div class="skill-desc">Verified FHEVM contract addresses for mainnet and Sepolia. Never guess addresses.</div>
   </div>
 

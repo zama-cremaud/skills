@@ -1,24 +1,37 @@
 # fheskills
 
-The missing knowledge between AI agents and production encrypted smart contracts.
+The missing knowledge between AI agents and production encrypted smart contracts on Zama's FHEVM.
 
-## Skills
+**Entry point:** [`SKILL.md`](SKILL.md) — start here. It covers the non-negotiable FHEVM gotchas and routes you to the right reference.
 
-| Skill | Path | Description |
-|-------|------|-------------|
-| General | `skills/general/SKILL.md` | FHE concepts, project planning, architecture, toolchain |
-| Solidity | `skills/solidity/SKILL.md` | Encrypted types, FHE operations, ACL, patterns, gas, security |
-| TypeScript | `skills/typescript/SKILL.md` | Frontend/backend encryption, decryption flows, UX patterns |
-| Addresses | `skills/addresses/SKILL.md` | Verified FHEVM contract addresses for mainnet and Sepolia |
+## References
+
+All loaded on demand from [`references/`](references/), nested by domain:
+
+```
+references/
+├── concepts.md                 — FHEVM mental model, planning, production readiness
+├── addresses.md                — verified contract addresses (never guess)
+├── solidity/
+│   ├── solidity.md             — encrypted Solidity router (types, ACL, HCU, config)
+│   ├── erc7984.md              — confidential token recipe + interface
+│   ├── fhe-advanced.md         — raw FHE ops, manual ACL, production decryption
+│   └── setups/
+│       ├── foundry.md          — default
+│       └── hardhat.md
+└── typescript/
+    ├── typescript.md           — SDK mental model + environment matrix
+    └── setups/
+        ├── react-wagmi.md      — default
+        ├── browser-viem.md
+        ├── browser-ethers.md
+        ├── node-backend.md
+        ├── extension-mv3.md
+        └── local-hardhat.md
+```
 
 ## Install
 
 ```bash
 npx skills add zama-ai/fheskills
-```
-
-## URL Pattern
-
-```
-https://fheskills.com/skills/<skill>/SKILL.md
 ```

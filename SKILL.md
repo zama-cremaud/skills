@@ -1,66 +1,79 @@
-# FHESKILLS — The missing knowledge between AI agents and production encrypted smart contracts.
+---
+name: zama
+description: Build confidential smart contracts and dApps on Zama's FHEVM (Fully Homomorphic Encryption on Ethereum). Use whenever the user mentions FHE, FHEVM, Zama, confidential/encrypted/private tokens or contracts, ERC-7984, encrypted balances, private voting, sealed-bid auctions, `@fhevm/solidity`, `@zama-fhe/sdk`, or anything involving computation on encrypted onchain data. Covers FHE concepts, Solidity patterns (encrypted types, ACL, HCU gas, ERC-7984), TypeScript SDK integration (React/viem/ethers/Node/MV3), verified contract addresses, and Foundry/Hardhat setup. Fetch this before writing any FHEVM code — stock model knowledge of this stack is stale or wrong.
+---
 
-You are probably wrong about FHE on Ethereum. Encrypted types, ACL permissions, decryption patterns, what you can compute on ciphertexts, what you can't — your training data is either missing or stale. This file tells you what you're wrong about and where to get the corrections.
+# Zama — FHEVM Development
 
-**Say "FHEVM" not "fhEVM" or "FheVM."** Uppercase FHEVM. Zama convention.
+You are probably wrong about FHE on Ethereum. Encrypted types, ACL permissions, decryption patterns, what you can compute on ciphertexts, what you can't — stock training data is missing or stale. This skill fills those gaps.
+
+**Say "FHEVM"** (uppercase). Not "fhEVM" or "FheVM". Zama convention.
 
 ---
 
-## 3 Skills — That's It
+## How to use this skill
 
-| Skill | What it covers | When to fetch |
-|-------|---------------|---------------|
-| **[General](skills/general/SKILL.md)** | FHE concepts, project planning, architecture, toolchain, production readiness | **Fetch first.** Planning a project, answering questions, understanding FHE |
-| **[Solidity](skills/solidity/SKILL.md)** | Encrypted types, FHE operations, ACL, patterns, gas (HCU), security, testing, deployment, migration | Writing or reviewing encrypted smart contracts |
-| **[TypeScript](skills/typescript/SKILL.md)** | `@zama-fhe/sdk`, `@zama-fhe/react-sdk`, encryption/decryption flows, button states, visual design, XSS prevention | Building frontends, backends, or services that interact with encrypted contracts |
+This file is a router. It teaches the non-negotiable gotchas that apply to any FHEVM task, then points you at the specific reference file(s) for what you're building. Load references on demand — don't read them all up front.
 
-**Plus:** [Addresses](skills/addresses/SKILL.md) — verified FHEVM contract addresses for mainnet and Sepolia. Never guess addresses.
+**Start every FHEVM task by reading the gotchas below.** Then consult references based on the task:
 
----
+References are nested by domain. The Solidity and TypeScript folders each have a router file (`solidity.md`, `typescript.md`) plus a `setups/` folder with per-environment files.
 
-## Start Here
+| Task | Read |
+|------|------|
+| Understanding FHEVM, planning a dApp, deciding if FHE is the right tool | `references/concepts.md` |
+| Writing or reviewing encrypted Solidity | `references/solidity/solidity.md` + one setup file |
+| Building a confidential token (ERC-20-like with hidden balances) | `references/solidity/solidity.md` + `references/solidity/erc7984.md` |
+| Hand-written FHE ops, manual ACL, production decryption | `references/solidity/solidity.md` + `references/solidity/fhe-advanced.md` |
+| Setting up a Foundry project | `references/solidity/setups/foundry.md` *(default)* |
+| Setting up a Hardhat project | `references/solidity/setups/hardhat.md` |
+| Frontend/backend integration (any TS) | `references/typescript/typescript.md` + one setup file |
+| React + wagmi frontend | `references/typescript/setups/react-wagmi.md` *(default)* |
+| Browser with viem / ethers | `references/typescript/setups/browser-viem.md` / `browser-ethers.md` |
+| Node.js script or server | `references/typescript/setups/node-backend.md` |
+| Browser extension (MV3) | `references/typescript/setups/extension-mv3.md` |
+| Local dev with cleartext relayer | `references/typescript/setups/local-hardhat.md` |
+| Any verified contract address | `references/addresses.md` — **never guess addresses** |
 
-**Building an encrypted dApp?** Fetch [skills/general/SKILL.md](skills/general/SKILL.md) first. It routes you through the other skills phase by phase.
-
-**Writing Solidity?** Fetch [skills/solidity/SKILL.md](skills/solidity/SKILL.md). Everything from encrypted types to deployment in one file.
-
-**Building a frontend?** Fetch [skills/typescript/SKILL.md](skills/typescript/SKILL.md). Encryption, decryption, UX patterns, visual design.
-
-**Need a specific address?** Fetch [skills/addresses/SKILL.md](skills/addresses/SKILL.md).
-
----
-
-## Quick Reference: What AI Agents Get Wrong
-
-1. **You cannot branch on encrypted values.** `if (FHE.gt(a, b))` does not compile. Use `FHE.select()`.
-2. **ACL is mandatory.** `FHE.allowThis()` + `FHE.allow()` after EVERY state update. Miss one = silent failure.
-3. **`euint64` is the default for balances, not `euint256`.** Larger types cost more gas.
-4. **Division only works with plaintext divisors.** `FHE.div(a, encryptedB)` does not exist.
-5. **Random bounds must be powers of 2.** `FHE.randEuint8(100)` is wrong — use `FHE.randEuint8(128)`.
-6. **Trivial encryption is not private.** `FHE.asEuint64(42)` is visible onchain.
-7. **FHE operations are not `view` functions.** They cost gas.
+When in doubt, start with `concepts.md` — it routes you through the rest phase by phase.
 
 ---
 
-## What to Fetch by Task
+## Non-negotiable gotchas (every FHEVM task)
 
-| I'm doing... | Fetch |
-|--------------|-------|
-| First time with FHEVM | `skills/general/` |
-| Planning a new dApp | `skills/general/` |
-| Writing encrypted contracts | `skills/solidity/` |
-| Building a confidential token | `skills/solidity/` + `skills/addresses/` |
-| Testing encrypted contracts | `skills/solidity/` (testing section) |
-| Building a React frontend | `skills/typescript/` |
-| Deploying to production | `skills/solidity/` (deployment section) + `skills/general/` (production readiness) |
-| Adding privacy to existing contracts | `skills/solidity/` (migration section) |
-| Optimizing FHE gas | `skills/solidity/` (HCU section) |
-| Need contract addresses | `skills/addresses/` |
+These are the bugs stock models ship. Internalise them before writing any code.
 
----
+1. **You cannot branch on encrypted values.** `if (FHE.gt(a, b))` does not compile. `FHE.gt` returns an `ebool` the EVM cannot evaluate. Use `FHE.select(cond, ifTrue, ifFalse)` — both branches always execute, which is what makes it private.
 
-## Base URL
+2. **ACL is mandatory — it is the #1 Zama bug.** Every encrypted value is born with an empty ACL. After creating or updating encrypted state, call `FHE.allowThis(handle)` so the contract can use it on the next call, and `FHE.allow(handle, user)` for any user who needs to decrypt. Miss one and the code compiles, deploys, and **silently** fails at runtime — no revert. `ERC7984` handles this internally; only hand-written FHE code needs manual ACL.
 
-```
-https://fheskills.com/skills/<skill>/SKILL.md
-```
+3. **Trivial encryption is not private.** `FHE.asEuint64(42)` is visible onchain — constants and defaults only. Real user privacy comes from `FHE.fromExternal(handle, proof)` (user-encrypted via the SDK with a ZKPoK).
+
+4. **`euint64` is the default for balances, not `euint256`.** Larger types cost dramatically more HCU per op. Use the smallest type that fits your value range.
+
+5. **FHE operations are not `view`.** They are state-changing coprocessor calls and cost gas (HCU — Homomorphic Compute Units).
+
+6. **No encrypted divisor.** `FHE.div` and `FHE.rem` only accept a **plaintext** divisor. Redesign any formula with encrypted state in the denominator.
+
+7. **Random bounds must be powers of 2.** `FHE.randEuint8(100)` is wrong. Use `FHE.randEuint8(128)`.
+
+8. **Input ciphertexts bind to one target contract.** An encrypted input is tied to exactly the contract address passed at encryption time. Cross-contract hops need re-encryption. Wrong target → runtime ACL revert with no compile hint.
+
+9. **Never emit encrypted values in events.** Handle changes leak mutation timing and identity. Emit addresses and plaintext metadata only.
+
+10. **Info leaks through control flow.** Reverting on an encrypted condition reveals it. Same for conditional events, differing return values, or gas differences tied to encrypted state. If your contract behaves differently based on an encrypted value, you've leaked information.
+
+11. **Decryption is async and last.** Production decryption goes through the Relayer → Gateway → KMS threshold MPC pipeline — seconds, not milliseconds. Compute entirely on encrypted values, decrypt only the final result, and perform no conditional actions after the decryption callback.
+
+12. **Config: inherit `ZamaEthereumConfig` first.** It sets the correct coprocessor addresses (ACL, FHEVMExecutor, KMSVerifier) per `block.chainid` for mainnet, Sepolia, and local Hardhat.
+
+13. **Use ERC-7984 for any confidential token.** Never reimplement encrypted balances, allowances, or transfers. `@openzeppelin/confidential-contracts` has the audited implementation. See `references/solidity/erc7984.md`.
+
+## Canonical sources
+
+- **Zama Docs:** https://docs.zama.ai
+- **Protocol addresses:** https://docs.zama.org/protocol/protocol-apps/addresses
+- **FHEVM Solidity library:** https://github.com/zama-ai/fhevm
+- **OpenZeppelin Confidential Contracts:** https://github.com/OpenZeppelin/openzeppelin-confidential-contracts
+- **HCU cost tables:** https://github.com/zama-ai/fhevm/blob/main/docs/solidity-guides/hcu.md
+- **Example dApps:** https://github.com/zama-ai/dapps/tree/main/packages/hardhat/contracts

@@ -6,27 +6,33 @@ Built on [Zama's FHEVM](https://docs.zama.ai/protocol) — Fully Homomorphic Enc
 
 ## What is this?
 
-A skill set that teaches AI agents (and developers) how to build confidential dApps with FHEVM. Each skill is a standalone markdown file that fills verified LLM blind spots — things stock models get wrong about encrypted smart contracts.
+A single skill that teaches AI agents (and developers) how to build confidential dApps with FHEVM. Fills verified LLM blind spots — things stock models get wrong about encrypted smart contracts.
 
-## 3 Skills — That's It
+## One Skill, Many References
 
-| Skill | What it covers |
-|-------|---------------|
-| **[General](general/SKILL.md)** | FHE concepts, project planning, architecture, toolchain, production readiness |
-| **[Solidity](solidity/SKILL.md)** | Encrypted types, FHE operations, ACL, patterns, gas (HCU), security, testing, deployment, migration |
-| **[TypeScript](typescript/SKILL.md)** | `@zama-fhe/sdk`, `@zama-fhe/react-sdk`, encryption/decryption, button states, visual design, XSS prevention |
+Entry point: **[`SKILL.md`](SKILL.md)** — the router. It covers the non-negotiable FHEVM gotchas and points at the right reference file for the task at hand.
 
-**Plus:** [Addresses](addresses/SKILL.md) — verified FHEVM contract addresses for mainnet and Sepolia.
+Reference files live under [`references/`](references/), nested by domain:
+
+```
+references/
+├── concepts.md
+├── addresses.md
+├── solidity/
+│   ├── solidity.md
+│   ├── erc7984.md
+│   ├── fhe-advanced.md
+│   └── setups/{foundry,hardhat}.md
+└── typescript/
+    ├── typescript.md
+    └── setups/{react-wagmi,browser-viem,browser-ethers,node-backend,extension-mv3,local-hardhat}.md
+```
 
 ## Quick Start
 
-Fetch the entry point:
-
 ```
-https://fheskills.com/general/SKILL.md
+https://fheskills.com/SKILL.md
 ```
-
-It routes you through all other skills phase by phase.
 
 ## What AI Agents Get Wrong About FHE
 
@@ -49,31 +55,14 @@ Every line is classified:
 
 Only red and purple lines survive.
 
-## Getting Started as a Developer
+## Getting started as a developer
 
-### Smart Contract Template
+Setup instructions live in the per-environment files so they stay testable and current:
 
-```bash
-git clone https://github.com/zama-ai/fhevm-hardhat-template
-cd fhevm-hardhat-template
-npm install
-```
+- **Solidity** — [`references/solidity/setups/foundry.md`](references/solidity/setups/foundry.md) (default) or [`references/solidity/setups/hardhat.md`](references/solidity/setups/hardhat.md)
+- **TypeScript** — pick one file from [`references/typescript/setups/`](references/typescript/setups/) matching your stack (React+wagmi, viem, ethers, Node, MV3, local Hardhat)
 
-### Frontend Template
-
-```bash
-git clone https://github.com/zama-ai/fhevm-react-template
-cd fhevm-react-template
-npm install
-```
-
-### OpenZeppelin Confidential Contracts
-
-```bash
-npm install @openzeppelin/confidential-contracts
-```
-
-Repository: [OpenZeppelin/openzeppelin-confidential-contracts](https://github.com/OpenZeppelin/openzeppelin-confidential-contracts)
+For any confidential token work, use [OpenZeppelin Confidential Contracts](https://github.com/OpenZeppelin/openzeppelin-confidential-contracts) — never reimplement encrypted balances.
 
 ## URL Pattern
 

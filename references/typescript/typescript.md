@@ -1,16 +1,15 @@
-# Zama TypeScript Skill
+# Zama TypeScript — SDK Integration
 
 Integrate the Zama FHE SDK into any TypeScript environment: browser, React, Node.js backend, browser extension, local Hardhat. React Native is not directly supported — run a Node backend and proxy.
 
-## How to use this skill
+This file covers the mental model, environment matrix, and universal gotchas. Pair it with **one** per-environment setup file from the sibling `setups/` folder (default: `setups/react-wagmi.md`):
 
-1. **Always** read this file — mental model, environment matrix, gotchas.
-2. Read **one** setup file for your environment (default: `setups/react-wagmi.md`):
-   - `react-wagmi.md` / `browser-viem.md` / `browser-ethers.md` — browser
-   - `node-backend.md` — Node.js (also: proxy for React Native)
-   - `extension-mv3.md` — MV3 browser extension
-   - `local-hardhat.md` — local dev with `RelayerCleartext`
-3. **Canonical docs** live at `github.com/zama-ai/sdk` under `docs/gitbook/src/`. Each setup file points at the specific page. When a detail isn't covered, read the doc page directly (or `node_modules/@zama-fhe/sdk/dist/esm/index.d.ts` as a fallback).
+- `setups/react-wagmi.md` / `setups/browser-viem.md` / `setups/browser-ethers.md` — browser
+- `setups/node-backend.md` — Node.js (also: proxy for React Native)
+- `setups/extension-mv3.md` — MV3 browser extension
+- `setups/local-hardhat.md` — local dev with `RelayerCleartext`
+
+**Canonical docs** live at `github.com/zama-ai/sdk` under `docs/gitbook/src/`. Each setup file points at the specific page. When a detail isn't covered, read the doc page directly (or `node_modules/@zama-fhe/sdk/dist/esm/index.d.ts` as a fallback).
 
 ## Mental model
 
