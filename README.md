@@ -24,15 +24,15 @@ The skill triggers automatically when you mention FHE, FHEVM, confidential contr
 
 ```bash
 git clone https://github.com/zama-ai/skills.git ~/src/zama-skills
-ln -s ~/src/zama-skills ~/.claude/skills/zama-protocol
+ln -s ~/src/zama-skills/skills/zama-protocol ~/.claude/skills/zama-protocol
 ```
 </details>
 
 ## One Skill, Many References
 
-Entry point: **[`SKILL.md`](SKILL.md)** — the router. It covers the non-negotiable FHEVM gotchas and points at the right reference file for the task at hand.
+Entry point: **[`skills/zama-protocol/SKILL.md`](skills/zama-protocol/SKILL.md)** — the router. It covers the non-negotiable FHEVM gotchas and points at the right reference file for the task at hand.
 
-Reference files live under [`references/`](references/), nested by domain:
+Reference files live under [`skills/zama-protocol/references/`](skills/zama-protocol/references/), nested by domain:
 
 ```
 references/
