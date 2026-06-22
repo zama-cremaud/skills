@@ -56,6 +56,18 @@ await token.confidentialTransfer("0xRecipient", 500n);
 (viem in Node: import `createConfig` from `@zama-fhe/sdk/viem` and pass
 `publicClient` + `walletClient` instead of `signer`.)
 
+## Relayer auth scheme
+
+The `auth` scheme must match where the relayer lives — the wrong one is rejected:
+
+| `auth.__type` | Sent as | Use against |
+|---|---|---|
+| `ApiKeyHeader` (`value`) | `x-api-key` header | **Zama-hosted relayer — required.** It accepts the key only here; also the default. |
+| `ApiKeyCookie` (`value`) | `x-api-key` cookie | Your own proxy — authenticate the SDK→proxy hop; the proxy then injects `x-api-key` upstream. |
+| `BearerToken` (`token`) | `Authorization: Bearer` | A **self-hosted** relayer whose auth layer expects a bearer token. |
+
+Against the Zama-hosted relayer only `ApiKeyHeader` works — do not reach for `BearerToken`. Note the field name differs: `ApiKeyHeader` / `ApiKeyCookie` carry the key in `value`, `BearerToken` in `token`.
+
 ## Server with concurrent requests
 
 Use `asyncLocalStorage` from `@zama-fhe/sdk/node` to isolate the FHE credentials per
