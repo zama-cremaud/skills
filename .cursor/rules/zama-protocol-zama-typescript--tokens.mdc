@@ -33,6 +33,8 @@ Use `createWrappedToken` whenever you shield/unshield; `createToken` is enough f
 
 ## Core token operations
 
+Write methods (`shield`, `unshield`, `confidentialTransfer`, `setOperator`, …) resolve to a `TransactionResult` — read `.txHash` (a `Hex`) and `.receipt` (the mined receipt), **not** `.hash`. `shield` additionally reports `.shieldPath` (`transferAndCall` vs `approveAndWrap`) so you can tell which route the SDK took.
+
 ### 1. Shield
 
 Shielding moves public ERC20 into confidential ERC-7984 balance. `WrappedToken.shield` (or `useShield`) handles the routing — it detects ERC-1363 support and routes through `transferAndCall` (one tx) or `approve` + `wrap` (two txs) automatically. Don't compose the approve/wrap calls by hand.
@@ -46,6 +48,8 @@ Typical sequence:
 ### 2. Read confidential balance
 
 This is a decrypting read, so a permit matters. Pair it with `permissions.md` or `react.md`.
+
+Your own balance needs only your own permit. Reading **another** account's balance (`token.balanceOf(otherAddress)`) returns clear-text only if that account granted you a decrypt delegation — otherwise use `Token.decryptBalanceAs` after a delegation (see *Delegation on token flows* below).
 
 React pattern:
 
